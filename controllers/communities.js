@@ -124,6 +124,17 @@ async function addLikeOrDislikeToPost(req, res) {
   }
 }
 
+async function deletePost(req, res) {
+  try {
+    const community = await Community.findById(req.params.communityId)
+    community.posts.remove({ _id: req.params.postId })
+    await community.save()
+    res.status(200).json(community)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 
 export {
   index,
@@ -132,5 +143,6 @@ export {
   deleteCommunity,
   show,
   addPost,
-  addLikeOrDislikeToPost
+  addLikeOrDislikeToPost,
+  deletePost
 }
