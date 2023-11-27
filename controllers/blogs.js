@@ -47,6 +47,15 @@ async function update(req, res) {
   }
 }
 
+async function deleteBlog(req, res) {
+  try {
+    const blog = await Blog.findByIdAndDelete(req.params.blogId)
+    res.status(200).json(blog)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 async function addComment(req, res) {
   try {
     const blog = await Blog.findById(req.params.blogId)
@@ -94,6 +103,28 @@ async function addLikeOrDislike(req, res) {
   }
 }
 
+async function addReply(req, res) {
+  try {
+    const blog = await Blog.findById(req.params.blogId);
+    const commentId = req.params.commentId
+    const comment = blog.comments.id(commentId)
+    const { content } = req.body;
+    const author = req.user.profile;
+    const reply = {
+      content,
+      author,
+    }
+    comment.replies.push(reply)
+    await blog.save()
+    const newReply = comment.replies[comment.replies.length - 1]
+    res.status(200).json(newReply)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
+
+
 
 
 export {
@@ -102,5 +133,7 @@ export {
   create,
   update,
   addComment,
-  addLikeOrDislike
+  addLikeOrDislike,
+  addReply,
+  deleteBlog,
 }

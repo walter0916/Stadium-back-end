@@ -16,5 +16,7 @@ router.get('/:blogId', checkAuth, blogsCtrl.show)
 router.put('/:blogId', checkAuth, blogsCtrl.update)
 router.post('/:blogId/comments', checkAuth, blogsCtrl.addComment)
 router.post('/:blogId/likesordislikes', checkAuth, blogsCtrl.addLikeOrDislike)
+router.post('/:blogId/:commentId/replies', checkAuth, blogsCtrl.addReply)
+router.delete('/:blogId', checkAuth, blogsCtrl.deleteBlog)
 
 export { router }
