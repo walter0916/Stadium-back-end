@@ -69,6 +69,17 @@ async function addComment(req, res) {
   }
 }
 
+async function deleteComment(req, res) {
+  try {
+    const blog = await Blog.findById(req.params.blogId)
+    blog.comments.remove({ _id: req.params.commentId })
+    await blog.save()
+    res.status(200).json(blog)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 async function addLikeOrDislike(req, res) {
   try {
     const blog = await Blog.findById(req.params.blogId)
@@ -124,6 +135,21 @@ async function addReply(req, res) {
   }
 }
 
+async function deleteReply(req, res) {
+  try {
+    const blog = await Blog.findById(req.params.blogId)
+    const commentId = req.params.commentId
+    const comment = blog.comments.id(commentId)
+    const replyId = req.params.replyId
+    const reply = comment.replies.id(replyId)
+    reply.remove()
+    await blog.save()
+    res.status(200).json(blog)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
 
 
 
@@ -136,4 +162,6 @@ export {
   addLikeOrDislike,
   addReply,
   deleteBlog,
+  deleteComment,
+  deleteReply
 }
