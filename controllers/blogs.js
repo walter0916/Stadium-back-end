@@ -34,8 +34,36 @@ async function create(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+    const blog = await Blog.findByIdAndUpdate(
+      req.params.blogId,
+      req.body,
+      { new: true }
+    )
+    res.status(200).json(blog)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+async function addComment(req, res) {
+  try {
+    const blog = await Blog.findById(req.params.blogId)
+    req.body.author = req.user.profile
+    blog.comments.push(req.body)
+    await blog.save()
+    const newComment = blog.comments[blog.comments.length - 1]
+    res.status(200).json(newComment)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 export {
   index,
   show,
-  create
+  create,
+  update,
+  addComment
 }
