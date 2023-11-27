@@ -24,7 +24,14 @@ async function show(req, res) {
 }
 
 async function create(req, res) {
-
+  try {
+    req.body.author = req.user.profile
+    req.body.league = await League.findById(req.body.leagueId)
+    const blog = await Blog.create(req.body)
+    res.status(200).json(blog)
+  } catch (error) {
+    res.status(500).json(error)
+  }
 }
 
 export {
