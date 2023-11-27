@@ -135,6 +135,27 @@ async function deletePost(req, res) {
   }
 }
 
+async function addReply(req, res) {
+  try {
+    const community = await Community.findById(req.params.communityId);
+    const postId = req.params.postId
+    const post = community.posts.id(postId)
+    const { content } = req.body;
+    const author = req.user.profile;
+    const reply = {
+      content,
+      author,
+    }
+    post.replies.push(reply)
+    await community.save()
+    const newReply = post.replies[post.replies.length - 1]
+    res.status(200).json(newReply)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
+
 
 export {
   index,
@@ -144,5 +165,6 @@ export {
   show,
   addPost,
   addLikeOrDislikeToPost,
-  deletePost
+  deletePost,
+  addReply
 }
