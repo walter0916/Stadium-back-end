@@ -156,6 +156,21 @@ async function addReply(req, res) {
   }
 }
 
+async function deleteReply(req, res) {
+  try {
+    const community = await Community.findById(req.params.communityId)
+    const postId = req.params.postId
+    const post = blog.comments.id(postId)
+    const replyId = req.params.replyId
+    const reply = post.replies.id(replyId)
+    reply.remove()
+    await community.save()
+    res.status(200).json(community)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 
 export {
   index,
@@ -166,5 +181,6 @@ export {
   addPost,
   addLikeOrDislikeToPost,
   deletePost,
-  addReply
+  addReply,
+  deleteReply
 }

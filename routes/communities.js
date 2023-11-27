@@ -19,5 +19,6 @@ router.post('/:communityId/posts', checkAuth, communitiesCtrl.addPost)
 router.patch('/:communityId/posts/:postId', checkAuth, communitiesCtrl.addLikeOrDislikeToPost)
 router.delete('/:communityId/posts/:postId', checkAuth, communitiesCtrl.deletePost)
 router.post('/:communityId/posts/:postId/replies', checkAuth, communitiesCtrl.addReply)
+router.delete('/:communityId/posts/:postId/replies/:replyId', checkAuth, communitiesCtrl.deleteReply)
 
 export { router }

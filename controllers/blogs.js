@@ -46,7 +46,6 @@ async function addBlogPhoto(req, res) {
     await blog.save()
     res.status(201).json(blog.photo)
   } catch (err) {
-    console.error(err)
     res.status(500).json(err)
   }
 }
@@ -126,7 +125,6 @@ async function addLikeOrDislike(req, res) {
     await blog.save()
     res.status(200).json(blog)
   } catch (error) {
-    console.error(error)
     res.status(500).json(error)
   }
 }
@@ -147,7 +145,6 @@ async function addReply(req, res) {
     const newReply = comment.replies[comment.replies.length - 1]
     res.status(200).json(newReply)
   } catch (error) {
-    console.error(error)
     res.status(500).json(error)
   }
 }
@@ -163,7 +160,6 @@ async function deleteReply(req, res) {
     await blog.save()
     res.status(200).json(blog)
   } catch (error) {
-    console.error(error)
     res.status(500).json(error)
   }
 }
