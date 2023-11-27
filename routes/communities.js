@@ -13,5 +13,6 @@ router.use(decodeUserFromToken)
 router.get('/', checkAuth, communitiesCtrl.index)
 router.post('/', checkAuth, communitiesCtrl.create)
 router.patch('/:communityId/join', checkAuth, communitiesCtrl.joinCommunity)
+router.delete('/:communityId', checkAuth, communitiesCtrl.deleteCommunity)
 
 export { router }

@@ -4,7 +4,7 @@ import { Profile } from "../models/profile.js";
 async function index(req,res) {
   try {
     const communities = await Community.find({})
-      .populate('posts')
+      .populate(['posts','communityMembers'])
     res.status(200).json(communities)
   } catch (error) {
     res.status(500).json(error)
@@ -28,7 +28,6 @@ async function joinCommunity(req, res) {
     )
     res.status(200).json(community)
   } catch (error) {
-    console.error(error)
     res.status(500).json(error)
   }
 }
@@ -47,15 +46,22 @@ async function create(req, res) {
     )
     res.status(201).json({ community, userProfile: updatedProfile })
   } catch (error) {
-    console.error(error)
     res.status(500).json(error)
   }
 }
 
-
+async function deleteCommunity(req, res) {
+  try {
+    const community = await Community.findByIdAndDelete(req.params.communityId)
+    res.status(200).json(community)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
 
 export {
   index,
   joinCommunity,
   create,
+  deleteCommunity
 }
