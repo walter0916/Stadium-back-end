@@ -34,6 +34,23 @@ async function create(req, res) {
   }
 }
 
+async function addBlogPhoto(req, res) {
+  try {
+    const imageFile = req.files.photo.path
+    const blog = await Blog.findById(req.params.blogId)
+    const image = await cloudinary.uploader.upload(
+      imageFile, 
+      { tags: `${req.user.email}` }
+    )
+    blog.photo = image.url
+    await blog.save()
+    res.status(201).json(blog.photo)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json(err)
+  }
+}
+
 async function update(req, res) {
   try {
     const blog = await Blog.findByIdAndUpdate(
@@ -163,5 +180,6 @@ export {
   addReply,
   deleteBlog,
   deleteComment,
-  deleteReply
+  deleteReply,
+  addBlogPhoto
 }

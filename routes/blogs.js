@@ -20,5 +20,6 @@ router.post('/:blogId/comments/:commentId/replies', checkAuth, blogsCtrl.addRepl
 router.delete('/:blogId', checkAuth, blogsCtrl.deleteBlog)
 router.delete('/:blogId/comments/:commentId', checkAuth, blogsCtrl.deleteComment)
 router.delete('/:blogId/comments/:commentId/replies/:replyId', checkAuth, blogsCtrl.deleteReply)
+router.post('/:blogId/add-photo', checkAuth, blogsCtrl.addBlogPhoto)
 
 export { router }
