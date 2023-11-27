@@ -10,6 +10,8 @@ const router = Router()
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
-router.get('/', checkAuth, communitiesCtrl.index) 
+router.get('/', checkAuth, communitiesCtrl.index)
+router.post('/', checkAuth, communitiesCtrl.create)
+router.patch('/:communityId/join', checkAuth, communitiesCtrl.joinCommunity)
 
 export { router }
