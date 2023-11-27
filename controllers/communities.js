@@ -84,10 +84,53 @@ async function deleteCommunity(req, res) {
   }
 }
 
+async function addPost(req, res) {
+  try {
+    const community = await Community.findById(req.params.communityId)
+    req.body.author = req.user.profile
+    community.posts.push(req.body)
+    await community.save()
+    const newPost = community.posts[community.posts.length - 1]
+    res.status(201).json(newPost)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+async function addLikeOrDislikeToPost(req, res) {
+  try {
+    const communityId = req.params.communityId
+    const postId = req.params.postId
+    const userId = req.user.profile
+    const community = await Community.findById(communityId)
+    const post = community.posts.id(postId)
+    const existingLikeDislike = post.likes.concat(post.dislikes).find(
+      (ld) => ld.author.equals(userId)
+    )
+    if (existingLikeDislike) {
+      post.likes.pull(existingLikeDislike._id)
+      post.dislikes.pull(existingLikeDislike._id)
+    }
+    const newLikeDislike = { type: req.body.type, author: userId }
+    if (req.body.type === 'Like') {
+      post.likes.push(newLikeDislike)
+    } else {
+      post.dislikes.push(newLikeDislike)
+    }
+    await community.save()
+    res.status(200).json(community)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+
 export {
   index,
   joinCommunity,
   create,
   deleteCommunity,
-  show
+  show,
+  addPost,
+  addLikeOrDislikeToPost
 }
