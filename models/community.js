@@ -35,6 +35,15 @@ const postSchema = new Schema({
   { timestamps: true }
 )
 
-const Post = mongoose.model('Post', postSchema)
+const communitySchema = new Schema({
+  teamName: {
+    type: String,
+    required: true
+  },
+  posts: [postSchema],
+  communityMembers: [{ type: Schema.Types.ObjectId, ref: 'Profile'}]
+})
 
-export { Post }
+const Community = mongoose.model('Community', communitySchema)
+
+export { Community }
