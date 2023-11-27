@@ -32,6 +32,31 @@ async function joinCommunity(req, res) {
   }
 }
 
+async function show(req, res) {
+  try {
+    const communityId = req.params.communityId;
+    const community = await Community.findById(communityId)
+    .populate({
+      path: 'posts',
+      populate: {
+        path: 'author',
+        model: 'Profile',
+      },
+      populate: {
+        path: 'replies',
+        populate: {
+          path: 'author',
+          model: 'Profile',
+        }
+      }
+    })
+    res.status(200).json(community)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+
 async function create(req, res) {
   try {
     const { teamName } = req.body
@@ -63,5 +88,6 @@ export {
   index,
   joinCommunity,
   create,
-  deleteCommunity
+  deleteCommunity,
+  show
 }

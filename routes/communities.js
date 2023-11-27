@@ -11,6 +11,7 @@ const router = Router()
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, communitiesCtrl.index)
+router.get('/:communityId', checkAuth, communitiesCtrl.show)
 router.post('/', checkAuth, communitiesCtrl.create)
 router.patch('/:communityId/join', checkAuth, communitiesCtrl.joinCommunity)
 router.delete('/:communityId', checkAuth, communitiesCtrl.deleteCommunity)
