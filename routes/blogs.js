@@ -15,5 +15,6 @@ router.post('/', checkAuth, blogsCtrl.create)
 router.get('/:blogId', checkAuth, blogsCtrl.show)
 router.put('/:blogId', checkAuth, blogsCtrl.update)
 router.post('/:blogId/comments', checkAuth, blogsCtrl.addComment)
+router.post('/:blogId/likesordislikes', checkAuth, blogsCtrl.addLikeOrDislike)
 
 export { router }
