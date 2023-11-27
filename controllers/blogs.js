@@ -28,7 +28,7 @@ async function create(req, res) {
     req.body.author = req.user.profile
     req.body.league = await League.findById(req.body.leagueId)
     const blog = await Blog.create(req.body)
-    res.status(200).json(blog)
+    res.status(201).json(blog)
   } catch (error) {
     res.status(500).json(error)
   }
@@ -79,7 +79,7 @@ async function addComment(req, res) {
     blog.comments.push(req.body)
     await blog.save()
     const newComment = blog.comments[blog.comments.length - 1]
-    res.status(200).json(newComment)
+    res.status(201).json(newComment)
   } catch (error) {
     res.status(500).json(error)
   }
@@ -143,7 +143,7 @@ async function addReply(req, res) {
     comment.replies.push(reply)
     await blog.save()
     const newReply = comment.replies[comment.replies.length - 1]
-    res.status(200).json(newReply)
+    res.status(201).json(newReply)
   } catch (error) {
     res.status(500).json(error)
   }

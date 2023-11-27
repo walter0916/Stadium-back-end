@@ -11,5 +11,7 @@ const router = Router()
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, leaguesCtrl.index)
+router.post('/', checkAuth, leaguesCtrl.create)
+router.get('/:leagueId', checkAuth, leaguesCtrl.show)
 
 export { router }

@@ -149,7 +149,7 @@ async function addReply(req, res) {
     post.replies.push(reply)
     await community.save()
     const newReply = post.replies[post.replies.length - 1]
-    res.status(200).json(newReply)
+    res.status(201).json(newReply)
   } catch (error) {
     console.error(error)
     res.status(500).json(error)
