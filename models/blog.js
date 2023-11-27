@@ -17,7 +17,7 @@ const likeDislikeSchema = new Schema({
     type: String,
     enum: ['Like', 'Dislike']
   }, 
-  author: { type: Schema.Types.ObjectId, ref: "Profile"}
+  author: { type: Schema.Types.ObjectId, ref: 'Profile'}
 },
   { timestamps: true }
 )
