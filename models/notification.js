@@ -8,7 +8,7 @@ const notificationSchema = new Schema({
     enum: ['Like', 'Dislike', 'Comment', 'Reply']
   },
   read : {
-    type: String,
+    type: Boolean,
     default: false
   },
   user: { type: Schema.Types.ObjectId, ref: 'Profile'},

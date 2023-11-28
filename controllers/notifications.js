@@ -1,4 +1,6 @@
 import { Notification } from '../models/notification.js'
+import { Blog } from '../models/blog.js'
+import { Community } from '../models/community.js'
 
 async function index(req, res) {
   try {
@@ -27,7 +29,27 @@ async function update(req, res) {
   } 
 }
 
+async function createBlogNotification(req, res) {
+  try {
+    const { type, blogId } = req.body
+    const user = req.user.profile
+    const blog = await Blog.findById(blogId)
+    const notification = await Notification.create({
+      type,
+      user,
+      targetUser: blog.author,
+      blog: blogId,
+      post: null,
+    })
+    res.status(201).json({ message: 'Notification created for blog interaction', notification })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   index,
-  update
+  update,
+  createBlogNotification
 }

@@ -12,5 +12,6 @@ const router = Router()
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, notificationsCtrl.index )
 router.get('/:notificationId', checkAuth, notificationsCtrl.update)
+router.post('/blog', checkAuth, notificationsCtrl.createBlogNotification)
 
 export { router }
