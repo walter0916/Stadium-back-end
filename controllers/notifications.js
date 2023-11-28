@@ -48,6 +48,28 @@ async function createBlogNotification(req, res) {
   }
 }
 
+async function createCommentReplyNotification(req, res) {
+  try {
+    const { type, blogId, commentId } = req.body
+    const user = req.user.profile
+    const blog = await Blog.findById(blogId)
+    const comment = blog.comments.id(commentId)
+    const notification = await Notification.create({
+      type,
+      user,
+      targetUser: comment.author,
+      blog: blogId,
+      post: null,
+      comment: commentId,
+    })
+    res.status(201).json({ message: 'Notification created for comment reply', notification })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
+
+
 async function createPostNotification(req, res) {
   try {
     const { type, communityId, postId } = req.body
@@ -73,5 +95,6 @@ export {
   index,
   update,
   createBlogNotification,
-  createPostNotification
+  createPostNotification,
+  createCommentReplyNotification
 }
