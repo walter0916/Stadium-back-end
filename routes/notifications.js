@@ -13,5 +13,6 @@ router.use(decodeUserFromToken)
 router.get('/', checkAuth, notificationsCtrl.index )
 router.get('/:notificationId', checkAuth, notificationsCtrl.update)
 router.post('/blog', checkAuth, notificationsCtrl.createBlogNotification)
+router.post('/post', checkAuth, notificationsCtrl.createPostNotification)
 
 export { router }

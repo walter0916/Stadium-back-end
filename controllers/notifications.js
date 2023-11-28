@@ -48,8 +48,30 @@ async function createBlogNotification(req, res) {
   }
 }
 
+async function createPostNotification(req, res) {
+  try {
+    const { type, communityId, postId } = req.body
+    const user = req.user.profile
+    const community = await Community.findById(communityId)
+    const post = community.posts.id(postId);
+    const targetUser = post.author
+    const notification = await Notification.create({
+      type,
+      user,
+      targetUser,
+      blog: null,
+      post: postId,
+    })
+    res.status(201).json({ message: 'Notification created for post interaction', notification })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   index,
   update,
-  createBlogNotification
+  createBlogNotification,
+  createPostNotification
 }
