@@ -7,8 +7,16 @@ const notificationSchema = new Schema({
     type: String,
     enum: ['Like', 'Dislike', 'Comment', 'Reply']
   },
+  read : {
+    type: String,
+    default: false
+  },
   user: { type: Schema.Types.ObjectId, ref: 'Profile'},
   targetUser: { type: Schema.Types.ObjectId, ref: 'Profile'},
   blog: { type: Schema.Types.ObjectId, ref: 'Blog'},
   post: { type: Schema.Types.ObjectId, ref: 'Community.posts'},
 })
+
+const Notification = mongoose.model('Notification', notificationSchema)
+
+export { Notification } 
