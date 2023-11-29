@@ -11,6 +11,17 @@ async function index(req, res) {
   }
 }
 
+async function show(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.id)
+    .populate(['interests', 'joinedCommunities'])
+    res.json(profile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
+
 async function addPhoto(req, res) {
   try {
     const imageFile = req.files.photo.path
@@ -30,4 +41,23 @@ async function addPhoto(req, res) {
   }
 }
 
-export { index, addPhoto }
+async function addLeaguesToInterests(req, res) {
+  try {
+    const userId = req.params.userId
+    const { leagues } = req.body
+    const profile = await Profile.findById(userId)
+    for (const league of leagues) {
+      if (!profile.interests.includes(league)) {
+        profile.interests.push(league)
+      }
+    }
+    await profile.save()
+    res.status(200).json({ message: 'Leagues added to interests', profile })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
+
+
+export { index, addPhoto, addLeaguesToInterests, show }
