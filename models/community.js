@@ -30,7 +30,8 @@ const postSchema = new Schema({
   replies: [replySchema],
   likes: [likeDislikeSchema],
   dislikes: [likeDislikeSchema], 
-  author: { type: Schema.Types.ObjectId, ref: 'Profile'}
+  author: { type: Schema.Types.ObjectId, ref: 'Profile'},
+  photo: String
 },
   { timestamps: true }
 )

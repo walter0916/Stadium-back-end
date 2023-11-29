@@ -10,7 +10,7 @@ const router = Router()
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, profilesCtrl.index)
-router.get('/:profileId', checkAuth, profilesCtrl.show)
+router.get('/:id', checkAuth, profilesCtrl.show)
 router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
 router.put('/:userId/interests', checkAuth, profilesCtrl.addLeaguesToInterests)
 

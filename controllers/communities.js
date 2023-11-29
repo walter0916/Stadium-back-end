@@ -171,6 +171,23 @@ async function deleteReply(req, res) {
   }
 }
 
+async function addPostPhoto(req, res) {
+  try {
+    const imageFile = req.files.photo.path
+    const communityId = req.params.communityId
+    const postId = req.params.postId
+    const community = await Community.findById(communityId)
+    const post = community.posts.id(postId)
+    const image = await cloudinary.uploader.upload(imageFile, { tags: `${req.user.email}` })
+    post.photo = image.url
+    await community.save()
+    res.status(201).json(post.photo)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json(err)
+  }
+}
+
 
 export {
   index,
@@ -182,5 +199,6 @@ export {
   addLikeOrDislikeToPost,
   deletePost,
   addReply,
-  deleteReply
+  deleteReply,
+  addPostPhoto
 }
