@@ -1,5 +1,6 @@
 import { Community } from "../models/community.js";
 import { Profile } from "../models/profile.js";
+import { v2 as cloudinary } from 'cloudinary'
 
 async function index(req,res) {
   try {
@@ -38,18 +39,18 @@ async function show(req, res) {
     const community = await Community.findById(communityId)
     .populate({
       path: 'posts',
-      populate: {
-        path: 'author',
-        model: 'Profile',
-      },
-      populate: {
-        path: 'replies',
-        populate: {
+      populate: [
+        {
           path: 'author',
-          model: 'Profile',
-        }
-      }
-    })
+        },
+        {
+          path: 'replies',
+          populate: {
+            path: 'author',
+          },
+        },
+      ],
+    });
     res.status(200).json(community)
   } catch (error) {
     res.status(500).json(error)
@@ -96,6 +97,7 @@ async function addPost(req, res) {
     res.status(500).json(error)
   }
 }
+
 
 async function addLikeOrDislikeToPost(req, res) {
   try {

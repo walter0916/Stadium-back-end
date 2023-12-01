@@ -20,5 +20,6 @@ router.patch('/:communityId/posts/:postId', checkAuth, communitiesCtrl.addLikeOr
 router.delete('/:communityId/posts/:postId', checkAuth, communitiesCtrl.deletePost)
 router.post('/:communityId/posts/:postId/replies', checkAuth, communitiesCtrl.addReply)
 router.delete('/:communityId/posts/:postId/replies/:replyId', checkAuth, communitiesCtrl.deleteReply)
+router.put('/:communityId/posts/:postId/add-photo', checkAuth, communitiesCtrl.addPostPhoto)
 
 export { router }
