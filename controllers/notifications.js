@@ -72,8 +72,10 @@ async function createCommentReplyNotification(req, res) {
 
 async function createPostNotification(req, res) {
   try {
-    const { type, communityId, postId } = req.body
+    const { type } = req.body
     const user = req.user.profile
+    const communityId = req.params.communityId
+    const postId = req.params.postId
     const community = await Community.findById(communityId)
     const post = community.posts.id(postId);
     const targetUser = post.author

@@ -13,7 +13,7 @@ router.use(decodeUserFromToken)
 router.get('/', checkAuth, notificationsCtrl.index )
 router.get('/:notificationId', checkAuth, notificationsCtrl.update)
 router.post('/blog', checkAuth, notificationsCtrl.createBlogNotification)
-router.post('/post', checkAuth, notificationsCtrl.createPostNotification)
+router.post('/:communityId/posts/:postId', checkAuth, notificationsCtrl.createPostNotification)
 router.post('/comment', checkAuth, notificationsCtrl.createCommentReplyNotification)
 
 export { router }
