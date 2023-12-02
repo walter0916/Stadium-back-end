@@ -51,6 +51,7 @@ async function show(req, res) {
         },
       ],
     });
+    community.posts.sort((a, b) => b.createdAt - a.createdAt);
     res.status(200).json(community)
   } catch (error) {
     res.status(500).json(error)
