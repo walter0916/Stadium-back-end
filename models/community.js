@@ -36,6 +36,7 @@ const postSchema = new Schema({
   { timestamps: true }
 )
 
+
 const communitySchema = new Schema({
   teamName: {
     type: String,
@@ -45,6 +46,9 @@ const communitySchema = new Schema({
   communityMembers: [{ type: Schema.Types.ObjectId, ref: 'Profile'}]
 })
 
+
 const Community = mongoose.model('Community', communitySchema)
 
 export { Community }
+
+

@@ -4,11 +4,10 @@ import { Community } from '../models/community.js'
 
 async function index(req, res) {
   try {
-    const userId = req.user.profile
-    const notifications = await Notification.find({ targetUser: userId })
-      .populate('user', 'name')
-      .populate('blog', 'title')
-      .populate('post', 'content')
+    const notifications = await Notification.find({})
+      .populate('user')
+      .populate('blog')
+      .populate('post')
     res.status(200).json(notifications)
   } catch (error) {
     console.error(error)
@@ -78,7 +77,7 @@ async function createPostNotification(req, res) {
     const postId = req.params.postId
     const community = await Community.findById(communityId)
     const post = community.posts.id(postId);
-    const targetUser = post.author
+    const targetUser = post.author._id
     const notification = await Notification.create({
       type,
       user,

@@ -14,15 +14,14 @@ const notificationSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'Profile'},
   targetUser: { type: Schema.Types.ObjectId, ref: 'Profile'},
   blog: { type: Schema.Types.ObjectId, ref: 'Blog'},
-  post: { type: Schema.Types.ObjectId, ref: 'Community.posts'},
+  post: { type: Schema.Types.ObjectId, ref: 'Community'},
 },
   { 
     timestamps: true,
-    expireAfterSeconds: 30 * 24 * 60 * 60
   }
 )
 
-notificationSchema.index({ createdAt: 1 }, { expireAfterSeconds: 0 })
+
 
 const Notification = mongoose.model('Notification', notificationSchema)
 
