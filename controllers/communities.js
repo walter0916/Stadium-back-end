@@ -121,7 +121,7 @@ async function addLikeOrDislikeToPost(req, res) {
       post.dislikes.push(newLikeDislike)
     }
     await community.save()
-    res.status(200).json(community)
+    res.status(200).json(newLikeDislike)
   } catch (error) {
     res.status(500).json(error)
   }

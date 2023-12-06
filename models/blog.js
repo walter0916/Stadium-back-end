@@ -49,7 +49,6 @@ const blogSchema = new Schema({
   dislikes: [likeDislikeSchema],
   photo: {
     type: String,
-    required: true
   }
 },
   { timestamps: true }

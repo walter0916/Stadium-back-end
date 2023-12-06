@@ -12,6 +12,7 @@ const router = Router()
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, blogsCtrl.index)
 router.post('/', checkAuth, blogsCtrl.create)
+router.put('/:blogId/add-photo', checkAuth, blogsCtrl.addBlogPhoto)
 router.get('/:blogId', checkAuth, blogsCtrl.show)
 router.put('/:blogId', checkAuth, blogsCtrl.update)
 router.post('/:blogId/comments', checkAuth, blogsCtrl.addComment)
@@ -20,6 +21,5 @@ router.post('/:blogId/comments/:commentId/replies', checkAuth, blogsCtrl.addRepl
 router.delete('/:blogId', checkAuth, blogsCtrl.deleteBlog)
 router.delete('/:blogId/comments/:commentId', checkAuth, blogsCtrl.deleteComment)
 router.delete('/:blogId/comments/:commentId/replies/:replyId', checkAuth, blogsCtrl.deleteReply)
-router.post('/:blogId/add-photo', checkAuth, blogsCtrl.addBlogPhoto)
 
 export { router }
