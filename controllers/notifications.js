@@ -30,7 +30,8 @@ async function update(req, res) {
 
 async function createBlogNotification(req, res) {
   try {
-    const { type, blogId } = req.body
+    const { type } = req.body
+    const blogId = req.params.blogId
     const user = req.user.profile
     const blog = await Blog.findById(blogId)
     const notification = await Notification.create({
