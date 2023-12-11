@@ -17,7 +17,22 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const blog = await Blog.findById(req.params.blogId)
-      .populate(['author', 'league'])
+    .populate([
+      'author',       
+      'league',     
+      {
+        path: 'comments',
+        populate: {
+          path: 'author',
+        },
+      },
+      {
+        path: 'comments.replies',
+        populate: {
+          path: 'author',
+        },
+      },
+    ])
     res.status(200).json(blog)
   } catch (error) {
     res.status(500).json(error)

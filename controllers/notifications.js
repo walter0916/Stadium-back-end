@@ -15,6 +15,22 @@ async function index(req, res) {
   }
 }
 
+async function show(req, res) {
+  try {
+    const notifications = await Notification.find({
+      user: req.params.profileId
+    })
+      .populate('user')
+      .populate('blog')
+      .populate('post')
+    res.status(200).json(notifications)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
+
+
 async function update(req, res) {
   try {
     const notification = await Notification.findByIdAndUpdate(
@@ -95,6 +111,7 @@ async function createPostNotification(req, res) {
 
 export {
   index,
+  show,
   update,
   createBlogNotification,
   createPostNotification,
