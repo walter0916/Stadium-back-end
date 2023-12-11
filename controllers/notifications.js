@@ -18,7 +18,7 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const notifications = await Notification.find({
-      user: req.params.profileId
+      targetUser: req.params.profileId
     })
       .populate('user')
       .populate('blog')
