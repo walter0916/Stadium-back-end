@@ -16,6 +16,7 @@ import { router as communitiesRouter } from './routes/communities.js'
 import { router as leaguesRouter } from './routes/leagues.js'
 import { router as notificationsRouter } from './routes/notifications.js'
 import { router as postsRouter } from './routes/posts.js'
+import { router as commentsRouter } from './routes/comments.js'
 
 // create the express app
 const app = express()
@@ -34,6 +35,7 @@ app.use('/api/communities', communitiesRouter)
 app.use('/api/leagues', leaguesRouter)
 app.use('/api/notifications', notificationsRouter)
 app.use('/api/posts', postsRouter)
+app.use('api/comments', commentsRouter)
 
 // handle 404 errors
 app.use(function (req, res, next) {

@@ -14,7 +14,7 @@ const notificationSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'Profile'},
   targetUser: { type: Schema.Types.ObjectId, ref: 'Profile'},
   blog: { type: Schema.Types.ObjectId, ref: 'Blog'},
-  post: { type: Schema.Types.ObjectId, ref: 'Community'},
+  post: { type: Schema.Types.ObjectId, ref: 'Post'},
 },
   { 
     timestamps: true,

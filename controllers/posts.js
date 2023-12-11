@@ -1,5 +1,6 @@
 import { Post } from "../models/post.js";
 import { Community } from "../models/community.js";
+import { v2 as cloudinary } from 'cloudinary'
 
 
 async function index(req,res) {
@@ -50,7 +51,7 @@ async function addLikeOrDislikeToPost(req, res) {
     } else {
       post.dislikes.push(newLikeDislike)
     }
-    await community.save()
+    await post.save()
     res.status(200).json(newLikeDislike)
   } catch (error) {
     res.status(500).json(error)

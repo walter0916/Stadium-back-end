@@ -1,6 +1,7 @@
 import { Notification } from '../models/notification.js'
 import { Blog } from '../models/blog.js'
 import { Community } from '../models/community.js'
+import { Post } from '../models/post.js'
 
 async function index(req, res) {
   try {
@@ -90,10 +91,8 @@ async function createPostNotification(req, res) {
   try {
     const { type } = req.body
     const user = req.user.profile
-    const communityId = req.params.communityId
     const postId = req.params.postId
-    const community = await Community.findById(communityId)
-    const post = community.posts.id(postId);
+    const post = await Post.findById(postId)
     const targetUser = post.author._id
     const notification = await Notification.create({
       type,
