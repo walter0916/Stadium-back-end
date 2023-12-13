@@ -35,7 +35,7 @@ app.use('/api/communities', communitiesRouter)
 app.use('/api/leagues', leaguesRouter)
 app.use('/api/notifications', notificationsRouter)
 app.use('/api/posts', postsRouter)
-app.use('api/comments', commentsRouter)
+app.use('/api/comments', commentsRouter)
 
 // handle 404 errors
 app.use(function (req, res, next) {

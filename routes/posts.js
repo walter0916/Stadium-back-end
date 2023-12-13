@@ -10,6 +10,7 @@ const router = Router()
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, postsCtrl.index)
+router.get('/userPosts/:profileId', checkAuth, postsCtrl.getUsersPosts)
 router.post('/:communityId', checkAuth, postsCtrl.addPost)
 router.delete('/:postId/:communityId', checkAuth, postsCtrl.deletePost)
 router.post('/:postId/replies', checkAuth, postsCtrl.addReply)

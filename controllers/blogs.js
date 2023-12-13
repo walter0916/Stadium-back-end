@@ -14,6 +14,17 @@ async function index(req, res) {
   }
 }
 
+async function getUserBlogs(req, res) {
+  try {
+    const blogs = await Blog.find({author: req.params.profileId})
+      .populate(['author', 'league'])
+      .sort({ createdAt: 'desc' })
+    res.status(200).json(blogs)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 async function show(req, res) {
   try {
     const blog = await Blog.findById(req.params.blogId)
@@ -187,6 +198,7 @@ async function deleteReply(req, res) {
 export {
   index,
   show,
+  getUserBlogs,
   create,
   update,
   addComment,

@@ -19,6 +19,22 @@ async function index(req,res) {
   }
 }
 
+async function getUsersPosts(req,res) {
+  try {
+    const posts = await Post.find({author: req.params.profileId})
+      .populate('author')
+      .populate({
+        path: 'replies',
+        populate: {
+            path: 'author'
+          }
+      })
+    res.status(200).json(posts)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 async function addPost(req, res) {
   try {
     const { communityId } = req.params
@@ -120,7 +136,8 @@ async function addPostPhoto(req, res) {
 }
 
 export {
-  index, 
+  index,
+  getUsersPosts,
   addPost, 
   deletePost, 
   addReply, 
