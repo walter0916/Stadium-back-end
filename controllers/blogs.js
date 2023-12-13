@@ -29,19 +29,21 @@ async function show(req, res) {
   try {
     const blog = await Blog.findById(req.params.blogId)
     .populate([
-      'author',       
-      'league',     
+      'author',
+      'league',
       {
         path: 'comments',
-        populate: {
-          path: 'author',
-        },
-      },
-      {
-        path: 'comments.replies',
-        populate: {
-          path: 'author',
-        },
+        populate: [
+          {
+            path: 'author',
+          },
+          {
+            path: 'replies',
+            populate: {
+              path: 'author',
+            },
+          },
+        ],
       },
     ])
     res.status(200).json(blog)
