@@ -59,5 +59,25 @@ async function addLeaguesToInterests(req, res) {
   }
 }
 
+async function updateInterests(req, res) {
+  try {
+    const userId = req.params.userId
+    const { newInterests } = req.body
+    const updatedProfile = await Profile.findByIdAndUpdate(
+      userId,
+      { interests: newInterests },
+      { new: true } 
+    )
+    if (!updatedProfile) {
+      return res.status(404).json({ message: 'Profile not found' })
+    }
+    res.status(200).json({ message: 'Interests updated successfully', profile: updatedProfile })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
 
-export { index, addPhoto, addLeaguesToInterests, show }
+
+
+export { index, addPhoto, addLeaguesToInterests, show, updateInterests }
