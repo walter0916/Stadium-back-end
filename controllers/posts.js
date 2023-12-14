@@ -39,6 +39,7 @@ async function addPost(req, res) {
   try {
     const { communityId } = req.params
     req.body.author = req.user.profile
+    req.body.community = communityId
     const newPost = await Post.create(req.body)
     const community = await Community.findById(communityId)
     community.posts.push(newPost)

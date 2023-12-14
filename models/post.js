@@ -31,7 +31,8 @@ const postSchema = new Schema({
   likes: [likeDislikeSchema],
   dislikes: [likeDislikeSchema], 
   author: { type: Schema.Types.ObjectId, ref: 'Profile'},
-  photo: String
+  photo: String,
+  community: { type: Schema.Types.ObjectId, ref: 'Community' },
 },
   { timestamps: true }
 )
