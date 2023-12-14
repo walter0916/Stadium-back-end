@@ -15,6 +15,6 @@ router.get('/:profileId', checkAuth, notificationsCtrl.show)
 router.put('/:notificationId/edit', checkAuth, notificationsCtrl.update)
 router.post('/:blogId', checkAuth, notificationsCtrl.createBlogNotification)
 router.post('/posts/:postId', checkAuth, notificationsCtrl.createPostNotification)
-router.post('/comment', checkAuth, notificationsCtrl.createCommentReplyNotification)
+router.post('/:blogId/comment/:commentId', checkAuth, notificationsCtrl.createCommentReplyNotification)
 
 export { router }

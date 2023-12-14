@@ -133,26 +133,13 @@ async function addLikeOrDislike(req, res) {
     const { type } = req.body
     const userId = req.user.profile
     const existingLike = blog.likes.find(like => like.author.equals(userId))
-    const existingDislike = blog.dislikes.find(dislike => dislike.author.equals(userId))
     if (type === 'Like') {
       if (existingLike) {
         blog.likes.pull(existingLike._id)
       } else {
         blog.likes.push({ type, author: userId })
       }
-      if (existingDislike) {
-        blog.dislikes.pull(existingDislike._id)
-      }
-    } else if (type === 'Dislike') {
-      if (existingDislike) {
-        blog.dislikes.pull(existingDislike._id)
-      } else {
-        blog.dislikes.push({ type, author: userId })
-      }
-      if (existingLike) {
-        blog.likes.pull(existingLike._id)
-      }
-    }
+    } 
     await blog.save()
     res.status(200).json(blog)
   } catch (error) {

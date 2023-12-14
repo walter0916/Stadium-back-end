@@ -13,7 +13,8 @@ router.use(decodeUserFromToken)
 router.get('/', checkAuth, communitiesCtrl.index)
 router.post('/', checkAuth, communitiesCtrl.create)
 router.get('/:communityId', checkAuth, communitiesCtrl.show)
-router.patch('/:communityId/join', checkAuth, communitiesCtrl.joinCommunity)
+router.put('/:communityId/join', checkAuth, communitiesCtrl.joinCommunity)
+router.put('/:communityId/leaveCommunity', checkAuth, communitiesCtrl.leaveCommunity)
 router.delete('/:communityId', checkAuth, communitiesCtrl.deleteCommunity)
 
 export { router }

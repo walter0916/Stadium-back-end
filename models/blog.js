@@ -25,7 +25,6 @@ const blogSchema = new Schema({
   league: { type: Schema.Types.ObjectId, ref: 'League'},
   author: { type: Schema.Types.ObjectId, ref: 'Profile'},
   likes: [likeDislikeSchema],
-  dislikes: [likeDislikeSchema],
   photo: {
     type: String,
   }

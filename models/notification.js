@@ -15,6 +15,7 @@ const notificationSchema = new Schema({
   targetUser: { type: Schema.Types.ObjectId, ref: 'Profile'},
   blog: { type: Schema.Types.ObjectId, ref: 'Blog'},
   post: { type: Schema.Types.ObjectId, ref: 'Post'},
+  comment: { type: Schema.Types.ObjectId, ref: 'Comment'},
 },
   { 
     timestamps: true,

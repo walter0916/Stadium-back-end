@@ -1,6 +1,7 @@
 import { Notification } from '../models/notification.js'
 import { Blog } from '../models/blog.js'
 import { Community } from '../models/community.js'
+import { Comment } from '../models/comment.js'
 import { Post } from '../models/post.js'
 
 async function index(req, res) {
@@ -58,6 +59,7 @@ async function createBlogNotification(req, res) {
       targetUser: blog.author,
       blog: blogId,
       post: null,
+      comment: null,
     })
     res.status(201).json({ message: 'Notification created for blog interaction', notification })
   } catch (error) {
@@ -68,10 +70,11 @@ async function createBlogNotification(req, res) {
 
 async function createCommentReplyNotification(req, res) {
   try {
-    const { type, blogId, commentId } = req.body
+    const { type } = req.body
+    const blogId = req.params.blogId
+    const commentId = req.params.commentId
     const user = req.user.profile
-    const blog = await Blog.findById(blogId)
-    const comment = blog.comments.id(commentId)
+    const comment = await Comment.findById(commentId)
     const notification = await Notification.create({
       type,
       user,
@@ -101,6 +104,7 @@ async function createPostNotification(req, res) {
       targetUser,
       blog: null,
       post: postId,
+      comment: null,
     })
     res.status(201).json({ message: 'Notification created for post interaction', notification })
   } catch (error) {

@@ -33,6 +33,28 @@ async function joinCommunity(req, res) {
   }
 }
 
+async function leaveCommunity(req, res) {
+  try {
+    const communityId = req.params.communityId
+    const userId = req.user.profile
+    const community = await Community.findById(communityId)
+    if (!community.communityMembers.includes(userId)) {
+      return res.status(400).json({ error: 'User is not a member of the community' })
+    }
+    community.communityMembers = community.communityMembers.filter(memberId => memberId.toString() !== userId.toString())
+    await community.save()
+    await Profile.findByIdAndUpdate(
+      userId,
+      { $pull: { joinedCommunities: communityId } },
+      { new: true }
+    )
+    res.status(200).json(community)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+
 async function show(req, res) {
   try {
     const communityId = req.params.communityId;
@@ -92,4 +114,5 @@ export {
   create,
   deleteCommunity,
   show,
+  leaveCommunity
 }
