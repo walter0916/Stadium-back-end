@@ -34,9 +34,10 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
+    const { read } = req.body
     const notification = await Notification.findByIdAndUpdate(
       req.params.notificationId,
-      { read: true },
+      { read },
       { new: true }
     )
     res.status(200).json({ message: 'Notification marked as read', notification })
