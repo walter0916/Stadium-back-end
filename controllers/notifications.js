@@ -31,6 +31,7 @@ async function show(req, res) {
           model: 'Community',
         },
       })
+      .sort({ createdAt: 'desc' })
     res.status(200).json(notifications)
   } catch (error) {
     console.error(error)
