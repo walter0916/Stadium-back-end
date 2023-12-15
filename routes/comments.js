@@ -14,5 +14,6 @@ router.post('/:blogId', checkAuth, commentsCtrl.addComment)
 router.delete('/:blogId/:commentId', checkAuth, commentsCtrl.deleteComment)
 router.post('/:blogId/:commentId/replies', checkAuth, commentsCtrl.addReply)
 router.delete('/:blogId/:commentId/replies/:replyId', checkAuth, commentsCtrl.deleteReply)
+router.patch('/:commentId/likes&dislikes', checkAuth, commentsCtrl.addLikeOrDislikeToComment)
 
 export { router }

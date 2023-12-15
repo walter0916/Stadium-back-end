@@ -80,10 +80,36 @@ async function deleteReply(req, res) {
   }
 }
 
+async function addLikeOrDislikeToComment(req, res) {
+  try {
+    const commentId = req.params.commentId
+    const userId = req.user.profile
+    const comment = await Comment.findById(commentId)
+    const existingLikeDislike = comment.likes.concat(comment.dislikes).find(
+      (ld) => ld.author.equals(userId)
+    )
+    if (existingLikeDislike) {
+      comment.likes.pull(existingLikeDislike._id)
+      comment.dislikes.pull(existingLikeDislike._id)
+    }
+    const newLikeDislike = { type: req.body.type, author: userId }
+    if (req.body.type === 'Like') {
+      comment.likes.push(newLikeDislike)
+    } else {
+      comment.dislikes.push(newLikeDislike)
+    }
+    await comment.save()
+    res.status(200).json(newLikeDislike)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 export {
   index,
   addComment,
   deleteComment,
   addReply,
   deleteReply,
+  addLikeOrDislikeToComment
 }
