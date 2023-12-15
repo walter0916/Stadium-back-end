@@ -24,7 +24,13 @@ async function show(req, res) {
     })
       .populate('user')
       .populate('blog')
-      .populate('post')
+      .populate({
+        path: 'post',
+        populate: {
+          path: 'community',
+          model: 'Community',
+        },
+      })
     res.status(200).json(notifications)
   } catch (error) {
     console.error(error)

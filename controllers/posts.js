@@ -44,6 +44,7 @@ async function addPost(req, res) {
     const community = await Community.findById(communityId)
     community.posts.push(newPost)
     await community.save()
+    await newPost.populate('author')
     res.status(201).json(newPost)
   } catch (error) {
     res.status(500).json(error)
@@ -99,8 +100,9 @@ async function addReply(req, res) {
     }
     post.replies.push(reply)
     await post.save()
-    const newReply = post.replies[post.replies.length - 1]
-    res.status(201).json(newReply)
+    await post
+      .populate({ path: 'replies', populate: { path: 'author' } })
+    res.status(201).json(post.replies[post.replies.length - 1])
   } catch (error) {
     console.error(error)
     res.status(500).json(error)
