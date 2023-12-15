@@ -33,6 +33,7 @@ async function show(req, res) {
       'league',
       {
         path: 'comments',
+        options: { sort: { createdAt: 'desc' } },
         populate: [
           {
             path: 'author',
@@ -46,6 +47,9 @@ async function show(req, res) {
         ],
       },
     ])
+    blog.comments.forEach(comment => {
+      comment.replies.sort((a, b) => b.createdAt - a.createdAt);
+    });
     res.status(200).json(blog)
   } catch (error) {
     res.status(500).json(error)

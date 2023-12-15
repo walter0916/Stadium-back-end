@@ -26,6 +26,7 @@ async function addComment(req, res) {
       blogId,
       { $push: { comments: newComment} },
       { new: true})
+    await newComment.populate('author')
     res.status(201).json(newComment)
   } catch (error) {
     res.status(500).json(error)
@@ -56,6 +57,8 @@ async function addReply(req, res) {
     }
     comment.replies.push(reply)
     await comment.save()
+    await comment
+    .populate({ path: 'replies', populate: { path: 'author' } })
     const newReply = comment.replies[comment.replies.length - 1]
     res.status(201).json(newReply)
   } catch (error) {
