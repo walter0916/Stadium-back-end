@@ -61,6 +61,7 @@ async function show(req, res) {
     const community = await Community.findById(communityId)
     .populate({
       path: 'posts',
+      options: { sort: { createdAt: 'desc' } },
       populate: [
         {
           path: 'author',
@@ -72,8 +73,10 @@ async function show(req, res) {
           },
         },
       ],
-    });
-    community.posts.sort((a, b) => b.createdAt - a.createdAt);
+    })
+    community.posts.forEach((post) => {
+      post.replies.sort((a, b) => b.createdAt - a.createdAt)
+    })
     res.status(200).json(community)
   } catch (error) {
     res.status(500).json(error)
