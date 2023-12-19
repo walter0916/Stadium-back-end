@@ -41,6 +41,19 @@ async function addPhoto(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+    const profile = await Profile.findByIdAndUpdate(
+      req.params.userId,
+      req.body,
+      { new: true }
+    )
+    res.status(200).json(profile)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 async function addLeaguesToInterests(req, res) {
   try {
     const userId = req.params.userId
@@ -77,4 +90,4 @@ async function updateInterests(req, res) {
 
 
 
-export { index, addPhoto, addLeaguesToInterests, show, updateInterests }
+export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests }
