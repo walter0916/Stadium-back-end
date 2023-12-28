@@ -1,4 +1,5 @@
-import { League } from "../models/league.js";
+import { League } from "../models/league.js"
+import * as soccerApiMiddleware from '../config/helper.js'
 
 async function index(req, res) {
   try {
@@ -27,8 +28,19 @@ async function create(req, res) {
   }
 }
 
+async function standings(req, res) {
+  try {
+    const leagueStandings = await soccerApiMiddleware.getLeagueById(req.params.standingsId)
+    res.status(201).json(leagueStandings)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+
 export {
   index,
   show,
-  create
+  create,
+  standings
 }

@@ -4,7 +4,7 @@ async function getLeagueById(leagueId) {
   try {
     const res = await fetch(`${BASE_URL}league=${leagueId}`, {
       headers: {
-        'X-RapidAPI-Key': `${import.meta.env.API_KEY}`,
+        'X-RapidAPI-Key': `${process.env.API_KEY}`,
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
       },
     })
