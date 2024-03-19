@@ -37,10 +37,20 @@ async function standings(req, res) {
   }
 }
 
+async function fixtures(req, res) {
+  try {
+    const leagueFixtures = await soccerApiMiddleware.getLeagueStandingsById(req.params.leagueId)
+    res.status(201).json(leagueFixtures)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 
 export {
   index,
   show,
   create,
-  standings
+  standings,
+  fixtures
 }

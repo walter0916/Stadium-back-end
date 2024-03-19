@@ -1,8 +1,8 @@
-const BASE_URL = 'https://api-football-v1.p.rapidapi.com/v3/standings?season=2023&'
+const BASE_URL = 'https://api-football-v1.p.rapidapi.com/v3'
 
 async function getLeagueById(leagueId) {
   try {
-    const res = await fetch(`${BASE_URL}league=${leagueId}`, {
+    const res = await fetch(`${BASE_URL}/standings?season=2023&league=${leagueId}`, {
       headers: {
         'X-RapidAPI-Key': `${process.env.API_KEY}`,
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
@@ -14,4 +14,18 @@ async function getLeagueById(leagueId) {
   }
 }
 
-export { getLeagueById }
+async function getLeagueStandingsById(leagueId) {
+  try {
+    const res = await fetch(`${BASE_URL}/fixtures?league=${leagueId}&season=2023`, {
+      headers: {
+        'X-RapidAPI-Key': `${process.env.API_KEY}`,
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+      },
+    })
+    return await res.json()
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export { getLeagueById, getLeagueStandingsById }

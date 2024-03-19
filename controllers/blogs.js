@@ -58,11 +58,9 @@ async function show(req, res) {
 
 async function create(req, res) {
   try {
-    console.log(req.body)
     req.body.author = req.user.profile
     req.body.league = await League.findById(req.body.leagueId)
     const blog = await Blog.create(req.body)
-    console.log(blog)
     res.status(201).json(blog)
   } catch (error) {
     res.status(500).json({ error: 'Failed to create blog', details: error.message, })
