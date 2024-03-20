@@ -103,4 +103,4 @@ async function getLeagueInfo(leagueName) {
   }
 }
 
-export { getLeagueById, getLeagueStandingsById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam }
+export { getLeagueById, getLeagueStandingsById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam, getLeagueInfo }

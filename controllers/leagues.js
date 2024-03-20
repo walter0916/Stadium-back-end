@@ -53,6 +53,19 @@ async function getLeagueInformation(req, res) {
     res.status(201).json(leagueInformation)
   } catch (error) {
     res.status(500).json(error)
+    console.log(error)
+  }
+}
+
+async function getLeagueStats(req, res) {
+  try {
+    const leagueId = req.params.leagueId
+    const scorerStat = await soccerApiMiddleware.getLeagueTopScorers(leagueId)
+    const assistsStat = await soccerApiMiddleware.getLeagueTopAssisters(leagueId)
+    const leagueStats = [scorerStat, assistsStat]
+    res.status(200).json(leagueStats)
+  } catch (error) {
+    res.status(500).json(error)
   }
 }
 
@@ -61,5 +74,7 @@ export {
   show,
   create,
   standings,
-  fixtures
+  fixtures,
+  getLeagueInformation,
+  getLeagueStats
 }

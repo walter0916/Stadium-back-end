@@ -1,5 +1,6 @@
 import { Profile } from '../models/profile.js'
 import { Community } from '../models/community.js'
+import { League } from '../models/league.js'
 import { v2 as cloudinary } from 'cloudinary'
 import * as soccerApiMiddleware from '../config/helper.js'
 
@@ -59,15 +60,26 @@ async function update(req, res) {
 async function addLeaguesToInterests(req, res) {
   try {
     const userId = req.params.userId
-    const { leagues } = req.body
     const profile = await Profile.findById(userId)
-    for (const league of leagues) {
-      if (!profile.interests.includes(league)) {
-        profile.interests.push(league)
-      }
+      .populate('interests')
+    console.log(req.body)
+    const isAlreadyAdded = profile.interests.some(league => league.leagueId === req.body.leagueId)
+    if (isAlreadyAdded) {
+      return res.status(400).json({ message: 'League already added to favorites' })
     }
+
+    let existingLeague = await League.findOne({ leagueId: req.body.leagueId })
+    if (!existingLeague) {
+      const newLeague = new League(req.body)
+      existingLeague = await newLeague.save()
+    }
+
+    profile.interests.push(existingLeague._id)
     await profile.save()
-    res.status(200).json({ message: 'Leagues added to interests', profile })
+
+    await existingLeague.save()
+
+    res.status(200).json({ message: 'League added to favorites', profile })
   } catch (error) {
     console.error(error)
     res.status(500).json(error)
