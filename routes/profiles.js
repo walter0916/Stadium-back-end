@@ -15,5 +15,8 @@ router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
 router.put('/:userId/edit', checkAuth, profilesCtrl.update)
 router.put('/:userId/interests', checkAuth, profilesCtrl.addLeaguesToInterests)
 router.put('/:userId/interests/edit', checkAuth, profilesCtrl.updateInterests)
+router.put('/:userId/favoriteTeam', checkAuth, profilesCtrl.addFavoriteTeamToProfile)
+router.put('/:userId/favoritePlayer', checkAuth, profilesCtrl.addFavoritePlayerToProfile)
+router.put('/getTeamInfo', checkAuth, profilesCtrl.getTeamInformation)
 
 export { router }
