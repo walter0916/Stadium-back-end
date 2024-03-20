@@ -153,4 +153,13 @@ async function getTeamInformation(req, res) {
   }
 }
 
-export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests, addFavoriteTeamToProfile, addFavoritePlayerToProfile, getTeamInformation }
+async function getUpcomingFixtureForFavoriteTeams(req, res) {
+try {
+  const fixture = await soccerApiMiddleware.getUpcomingFixtureForFavoriteTeam(req.params.teamId)
+  res.status(201).json(fixture)
+} catch (error) {
+  res.status(500).json(error)
+}
+}
+
+export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests, addFavoriteTeamToProfile, addFavoritePlayerToProfile, getTeamInformation, getUpcomingFixtureForFavoriteTeams }

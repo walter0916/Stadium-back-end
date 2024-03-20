@@ -87,5 +87,20 @@ async function getUpcomingFixtureForFavoriteTeam(teamId) {
   }
 }
 
+async function getLeagueInfo(leagueName) {
+  try {
+    const formattedLeagueName = leagueName.replace(/\s+/g, ' ')
+    const url = `${BASE_URL}/leagues?name=${formattedLeagueName.replace(/ /g, '%20')}`
+    const res = await fetch(url, {
+      headers: {
+        'X-RapidAPI-Key': `${process.env.API_KEY}`,
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+      },
+    })
+    return await res.json()
+  } catch (error) {
+    throw new Error(error)
+  }
+}
 
 export { getLeagueById, getLeagueStandingsById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam }

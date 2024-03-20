@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
 const leagueSchema = new Schema({
-  leagueName: String
+  leagueData: [Object]
 })
 
 const League = mongoose.model('League', leagueSchema)

@@ -21,7 +21,7 @@ async function show(req, res) {
 
 async function create(req, res) {
   try {
-    const league = await League.create(req.body)
+    const league = await League.create({ leagueData: req.body })
     res.status(201).json(league)
   } catch (error) {
     res.status(500).json(error)
@@ -46,6 +46,15 @@ async function fixtures(req, res) {
   }
 }
 
+async function getLeagueInformation(req, res) {
+  try {
+    const leagueName = req.body.leagueName
+    const leagueInformation = await soccerApiMiddleware.getLeagueInfo(leagueName)
+    res.status(201).json(leagueInformation)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
 
 export {
   index,
