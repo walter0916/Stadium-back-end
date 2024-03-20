@@ -1,6 +1,7 @@
 import { Profile } from '../models/profile.js'
 import { Community } from '../models/community.js'
 import { v2 as cloudinary } from 'cloudinary'
+import * as soccerApiMiddleware from '../config/helper.js'
 
 async function index(req, res) {
   try {
@@ -142,6 +143,14 @@ async function addFavoritePlayerToProfile(req, res) {
   }
 }
 
+async function getTeamInformation(req, res) {
+  try {
+    const teamName = req.body.teamName
+    const teamInfo = await soccerApiMiddleware.getTeamInfo(teamName)
+    res.status(201).json(teamInfo)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
 
-
-export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests, addFavoriteTeamToProfile, addFavoritePlayerToProfile }
+export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests, addFavoriteTeamToProfile, addFavoritePlayerToProfile, getTeamInformation }
