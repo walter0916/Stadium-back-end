@@ -11,6 +11,9 @@ const communitySchema = new Schema({
     type: String,
     required: true
   },
+  logo: {
+    type: String,
+  },
   posts: [{ type: Schema.Types.ObjectId, ref: 'Post'}],
   communityMembers: [{ type: Schema.Types.ObjectId, ref: 'Profile'}]
 })

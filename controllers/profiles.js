@@ -91,21 +91,21 @@ async function updateInterests(req, res) {
 async function addFavoriteTeamToProfile(req, res) {
   try {
     const userId = req.params.userId
-    const { favoriteTeam } = req.body
     const profile = await Profile.findById(userId)
-
-    const isAlreadyAdded = profile.favoriteTeams.some(team => team.teamId === favoriteTeam.teamId)
+    console.log(req.body)
+    const isAlreadyAdded = profile.favoriteTeams.some(team => team.id === req.body.teamId)
     if (isAlreadyAdded) {
       return res.status(400).json({ message: 'Team already added to favorites' })
     }
 
-    profile.favoriteTeams.push(favoriteTeam)
+    profile.favoriteTeams.push(req.body)
 
-    let existingCommunity = await Community.findOne({ teamId: favoriteTeam.teamId })
+    let existingCommunity = await Community.findOne({ teamId: req.body.teamId })
     if (!existingCommunity) {
       const newCommunity = new Community({
-        teamId: favoriteTeam.teamId,
-        teamName: favoriteTeam.name,
+        teamId: req.body.teamId,
+        teamName: req.body.name,
+        logo: req.body.logo
       })
       existingCommunity = await newCommunity.save()
     }
