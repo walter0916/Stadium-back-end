@@ -28,4 +28,32 @@ async function getLeagueStandingsById(leagueId) {
   }
 }
 
-export { getLeagueById, getLeagueStandingsById }
+async function getLeagueTopScorers(leagueId) {
+  try {
+    const res = await fetch(`${BASE_URL}/players/topscorers?league=${leagueId}&season=2023`, {
+      headers: {
+        'X-RapidAPI-Key': `${process.env.API_KEY}`,
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+      },
+    })
+    return await res.json()
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+async function getLeagueTopAssisters(leagueId) {
+  try {
+    const res = await fetch(`${BASE_URL}/players/topassists?league=${leagueId}&season=2023`, {
+      headers: {
+        'X-RapidAPI-Key': `${process.env.API_KEY}`,
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+      },
+    })
+    return await res.json()
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export { getLeagueById, getLeagueStandingsById, getLeagueTopScorers, getLeagueTopAssisters }
