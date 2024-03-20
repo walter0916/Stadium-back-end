@@ -1,4 +1,5 @@
 import { Profile } from '../models/profile.js'
+import { Community } from '../models/community.js'
 import { v2 as cloudinary } from 'cloudinary'
 
 async function index(req, res) {
@@ -75,7 +76,6 @@ async function addLeaguesToInterests(req, res) {
 async function updateInterests(req, res) {
   try {
     const userId = req.params.userId
-    const { interests } = req.body
     console.log(req.body)
     const profile = await Profile.findById(userId)
     profile.interests = req.body.interests
@@ -87,7 +87,61 @@ async function updateInterests(req, res) {
   }
 }
 
+async function addFavoriteTeamToProfile(req, res) {
+  try {
+    const userId = req.params.userId
+    const { favoriteTeam } = req.body
+    const profile = await Profile.findById(userId)
+
+    const isAlreadyAdded = profile.favoriteTeams.some(team => team.teamId === favoriteTeam.teamId)
+    if (isAlreadyAdded) {
+      return res.status(400).json({ message: 'Team already added to favorites' })
+    }
+
+    profile.favoriteTeams.push(favoriteTeam)
+
+    let existingCommunity = await Community.findOne({ teamId: favoriteTeam.teamId })
+    if (!existingCommunity) {
+      const newCommunity = new Community({
+        teamId: favoriteTeam.teamId,
+        teamName: favoriteTeam.name,
+      })
+      existingCommunity = await newCommunity.save()
+    }
+
+    profile.joinedCommunities.push(existingCommunity._id)
+    await profile.save()
+
+    existingCommunity.communityMembers.push(profile._id)
+    await existingCommunity.save()
+
+    res.status(200).json({ message: 'Team added to favorites', profile })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json(error)
+  }
+}
+
+
+async function addFavoritePlayerToProfile(req, res) {
+  try {
+    const userId = req.params.userId
+    const { favoritePlayer } = req.body
+    const profile = await Profile.findById(userId)
+    const isAlreadyAdded = profile.favoritePlayers.some(player => player.playerId === favoritePlayer.playerId)
+    if (isAlreadyAdded) {
+      return res.status(400).json({ message: 'Player already added to favorites' })
+    }
+
+    profile.favoritePlayers.push(favoritePlayer)
+    await profile.save()
+    res.status(200).json({ message: 'Player added to favorites', profile })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+}
 
 
 
-export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests }
+export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests, addFavoriteTeamToProfile, addFavoritePlayerToProfile }

@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
 const communitySchema = new Schema({
+  teamId: { 
+    type: Number,
+    required: true
+  },
   teamName: {
     type: String,
     required: true
