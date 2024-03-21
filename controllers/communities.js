@@ -1,6 +1,6 @@
 import { Community } from "../models/community.js";
 import { Profile } from "../models/profile.js";
-import { v2 as cloudinary } from 'cloudinary'
+import * as soccerApiMiddleware from '../config/helper.js'
 
 async function index(req,res) {
   try {
@@ -111,11 +111,21 @@ async function deleteCommunity(req, res) {
   }
 }
 
+async function getTeamFixtures(req, res) {
+  try {
+    const teamFixtures = await soccerApiMiddleware.getFixturesForTeam(req.params.teamId, req.params.year)
+    res.status(200).json(teamFixtures)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 export {
   index,
   joinCommunity,
   create,
   deleteCommunity,
   show,
-  leaveCommunity
+  leaveCommunity,
+  getTeamFixtures
 }

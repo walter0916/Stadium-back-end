@@ -103,4 +103,18 @@ async function getLeagueInfo(leagueName) {
   }
 }
 
-export { getLeagueById, getLeagueFixturesById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam, getLeagueInfo }
+async function getFixturesForTeam(teamId, year) {
+  try {
+    const res = await fetch(`${BASE_URL}/fixtures?season=${year}&team=${teamId}`, {
+      headers: {
+        'X-RapidAPI-Key': `${process.env.API_KEY}`,
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+      },
+    })
+    return await res.json()
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export { getLeagueById, getLeagueFixturesById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam, getLeagueInfo, getFixturesForTeam }
