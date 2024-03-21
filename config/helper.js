@@ -131,4 +131,4 @@ async function getTeamStatistics(leagueId, teamId, year) {
   }
 }
 
-export { getLeagueById, getLeagueFixturesById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam, getLeagueInfo, getFixturesForTeam }
+export { getLeagueById, getLeagueFixturesById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam, getLeagueInfo, getFixturesForTeam, getTeamStatistics }

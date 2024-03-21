@@ -70,6 +70,17 @@ async function getLeagueStats(req, res) {
   }
 }
 
+async function getTeamStats(req, res) {
+  try {
+    const leagueId = req.params.leagueId
+    const year = req.params.year
+    const teamId = req.params.teamId
+    const statsData = await soccerApiMiddleware.getTeamStatistics(leagueId,teamId,year)
+  } catch (error) {
+    
+  }
+}
+
 export {
   index,
   show,
@@ -77,5 +88,6 @@ export {
   standings,
   fixtures,
   getLeagueInformation,
-  getLeagueStats
+  getLeagueStats,
+  getTeamStats
 }
