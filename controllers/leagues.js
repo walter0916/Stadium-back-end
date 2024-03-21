@@ -30,7 +30,7 @@ async function create(req, res) {
 
 async function standings(req, res) {
   try {
-    const leagueStandings = await soccerApiMiddleware.getLeagueById(req.params.standingsId)
+    const leagueStandings = await soccerApiMiddleware.getLeagueById(req.params.standingsId, req.params.year)
     res.status(201).json(leagueStandings)
   } catch (error) {
     res.status(500).json(error)
@@ -39,7 +39,7 @@ async function standings(req, res) {
 
 async function fixtures(req, res) {
   try {
-    const leagueFixtures = await soccerApiMiddleware.getLeagueStandingsById(req.params.leagueId)
+    const leagueFixtures = await soccerApiMiddleware.getLeagueFixturesById(req.params.leagueId, req.params.year)
     res.status(201).json(leagueFixtures)
   } catch (error) {
     res.status(500).json(error)
@@ -60,9 +60,10 @@ async function getLeagueInformation(req, res) {
 async function getLeagueStats(req, res) {
   try {
     const leagueId = req.params.leagueId
-    const scorerStat = await soccerApiMiddleware.getLeagueTopScorers(leagueId)
-    const assistsStat = await soccerApiMiddleware.getLeagueTopAssisters(leagueId)
-    const leagueStats = [scorerStat, assistsStat]
+    const year = req.params.year
+    const scorerStat = await soccerApiMiddleware.getLeagueTopScorers(leagueId, year)
+    const assistsStat = await soccerApiMiddleware.getLeagueTopAssisters(leagueId, year)
+    const leagueStats = [scorerStat.response, assistsStat.response]
     res.status(200).json(leagueStats)
   } catch (error) {
     res.status(500).json(error)

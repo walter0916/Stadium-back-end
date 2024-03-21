@@ -1,8 +1,8 @@
 const BASE_URL = 'https://api-football-v1.p.rapidapi.com/v3'
 
-async function getLeagueById(leagueId) {
+async function getLeagueById(leagueId, year) {
   try {
-    const res = await fetch(`${BASE_URL}/standings?season=2023&league=${leagueId}`, {
+    const res = await fetch(`${BASE_URL}/standings?season=${year}&league=${leagueId}`, {
       headers: {
         'X-RapidAPI-Key': `${process.env.API_KEY}`,
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
@@ -14,9 +14,9 @@ async function getLeagueById(leagueId) {
   }
 }
 
-async function getLeagueStandingsById(leagueId) {
+async function getLeagueFixturesById(leagueId, year) {
   try {
-    const res = await fetch(`${BASE_URL}/fixtures?league=${leagueId}&season=2023`, {
+    const res = await fetch(`${BASE_URL}/fixtures?league=${leagueId}&season=${year}`, {
       headers: {
         'X-RapidAPI-Key': `${process.env.API_KEY}`,
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
@@ -28,9 +28,9 @@ async function getLeagueStandingsById(leagueId) {
   }
 }
 
-async function getLeagueTopScorers(leagueId) {
+async function getLeagueTopScorers(leagueId, year) {
   try {
-    const res = await fetch(`${BASE_URL}/players/topscorers?league=${leagueId}&season=2023`, {
+    const res = await fetch(`${BASE_URL}/players/topscorers?league=${leagueId}&season=${year}`, {
       headers: {
         'X-RapidAPI-Key': `${process.env.API_KEY}`,
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
@@ -42,9 +42,9 @@ async function getLeagueTopScorers(leagueId) {
   }
 }
 
-async function getLeagueTopAssisters(leagueId) {
+async function getLeagueTopAssisters(leagueId, year) {
   try {
-    const res = await fetch(`${BASE_URL}/players/topassists?league=${leagueId}&season=2023`, {
+    const res = await fetch(`${BASE_URL}/players/topassists?league=${leagueId}&season=${year}`, {
       headers: {
         'X-RapidAPI-Key': `${process.env.API_KEY}`,
         'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
@@ -103,4 +103,4 @@ async function getLeagueInfo(leagueName) {
   }
 }
 
-export { getLeagueById, getLeagueStandingsById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam, getLeagueInfo }
+export { getLeagueById, getLeagueFixturesById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam, getLeagueInfo }
