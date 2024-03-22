@@ -104,7 +104,7 @@ async function addFavoriteTeamToProfile(req, res) {
   try {
     const userId = req.params.userId
     const profile = await Profile.findById(userId)
-    const isAlreadyAdded = profile.favoriteTeams.some(team => team.id === req.body.teamId)
+    const isAlreadyAdded = profile.favoriteTeams.some(team => team.teamId === req.body.teamId)
     if (isAlreadyAdded) {
       return res.status(400).json({ message: 'Team already added to favorites' })
     }
@@ -139,7 +139,6 @@ async function addFavoritePlayerToProfile(req, res) {
   try {
     const userId = req.params.userId
     const profile = await Profile.findById(userId)
-    console.log(req.body)
     const isAlreadyAdded = profile.favoritePlayers.some(player => player.playerId === req.body.playerId)
     if (isAlreadyAdded) {
       return res.status(400).json({ message: 'Player already added to favorites' })
