@@ -76,8 +76,9 @@ async function getTeamStats(req, res) {
     const year = req.params.year
     const teamId = req.params.teamId
     const statsData = await soccerApiMiddleware.getTeamStatistics(leagueId,teamId,year)
+    res.status(201).json(statsData)
   } catch (error) {
-    
+    res.error(500).json(error)
   }
 }
 

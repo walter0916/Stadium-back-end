@@ -21,20 +21,11 @@ const playerSchema = new Schema({
   age: Number,
   height: String,
   weight: String,
-  injured: Boolean,
   photo: String,
-  goals: Number,
-  assists: Number,
   teamName: String,
   teamLogo: String,
-  appearances: Number,
+  teamId: Number,
   position: String,
-  keyPasses: Number,
-  dribblesAttempted: Number,
-  dribblesSucceeded: Number,
-  tackles: Number,
-  blocks: Number,
-  interceptions: Number,
 })
 
 const profileSchema = new Schema({

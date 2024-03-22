@@ -104,7 +104,6 @@ async function addFavoriteTeamToProfile(req, res) {
   try {
     const userId = req.params.userId
     const profile = await Profile.findById(userId)
-    console.log(req.body)
     const isAlreadyAdded = profile.favoriteTeams.some(team => team.id === req.body.teamId)
     if (isAlreadyAdded) {
       return res.status(400).json({ message: 'Team already added to favorites' })
@@ -139,14 +138,14 @@ async function addFavoriteTeamToProfile(req, res) {
 async function addFavoritePlayerToProfile(req, res) {
   try {
     const userId = req.params.userId
-    const { favoritePlayer } = req.body
     const profile = await Profile.findById(userId)
-    const isAlreadyAdded = profile.favoritePlayers.some(player => player.playerId === favoritePlayer.playerId)
+    console.log(req.body)
+    const isAlreadyAdded = profile.favoritePlayers.some(player => player.playerId === req.body.playerId)
     if (isAlreadyAdded) {
       return res.status(400).json({ message: 'Player already added to favorites' })
     }
 
-    profile.favoritePlayers.push(favoritePlayer)
+    profile.favoritePlayers.push(req.body)
     await profile.save()
     res.status(200).json({ message: 'Player added to favorites', profile })
   } catch (error) {
@@ -165,6 +164,18 @@ async function getTeamInformation(req, res) {
   }
 }
 
+async function getPlayerInfo(req, res) {
+  try {
+    const playerName = req.body.playerName
+    const teamId = req.params.teamId
+    const year = req.params.year
+    const playerData = await soccerApiMiddleware.getPlayerInformation(teamId, year, playerName)
+    res.status(200).json(playerData)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 async function getUpcomingFixtureForFavoriteTeams(req, res) {
 try {
   const fixture = await soccerApiMiddleware.getUpcomingFixtureForFavoriteTeam(req.params.teamId)
@@ -174,4 +185,4 @@ try {
 }
 }
 
-export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests, addFavoriteTeamToProfile, addFavoritePlayerToProfile, getTeamInformation, getUpcomingFixtureForFavoriteTeams }
+export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests, addFavoriteTeamToProfile, addFavoritePlayerToProfile, getTeamInformation, getUpcomingFixtureForFavoriteTeams, getPlayerInfo }
