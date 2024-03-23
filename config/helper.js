@@ -131,7 +131,7 @@ async function getTeamStatistics(leagueId, teamId, year) {
   }
 }
 
-async function getPlayerInformation(teamId, year, playerName) {
+async function getPlayerInformationByName(teamId, year, playerName) {
   try {
     const formattedPlayerName = playerName.replace(/\s+/g, ' ')
     const res = await fetch(`${BASE_URL}/players?team=${teamId}&season=${year}&search=${formattedPlayerName.replace(/ /g, '%20')}`, {
@@ -146,4 +146,18 @@ async function getPlayerInformation(teamId, year, playerName) {
   }
 }
 
-export { getLeagueById, getLeagueFixturesById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam, getLeagueInfo, getFixturesForTeam, getTeamStatistics, getPlayerInformation }
+async function getPlayerInformationById(teamId, year, playerId) {
+  try {
+    const res = await fetch(`${BASE_URL}/players?id=${playerId}&team=${teamId}&season=${year}`, {
+      headers: {
+        'X-RapidAPI-Key': `${process.env.API_KEY}`,
+        'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+      },
+    })
+    return await res.json()
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export { getLeagueById, getLeagueFixturesById, getLeagueTopScorers, getLeagueTopAssisters, getTeamInfo, getUpcomingFixtureForFavoriteTeam, getLeagueInfo, getFixturesForTeam, getTeamStatistics, getPlayerInformationByName, getPlayerInformationById }

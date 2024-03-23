@@ -18,7 +18,8 @@ router.put('/:userId/interests/edit', checkAuth, profilesCtrl.updateInterests)
 router.put('/:userId/favoriteTeam', checkAuth, profilesCtrl.addFavoriteTeamToProfile)
 router.put('/:userId/favoritePlayer', checkAuth, profilesCtrl.addFavoritePlayerToProfile)
 router.put('/getTeamInfo', checkAuth, profilesCtrl.getTeamInformation)
-router.put('/getPlayerInfo/:teamId/:year', checkAuth, profilesCtrl.getPlayerInfo)
+router.put('/getPlayerInfoByName/:teamId/:year', checkAuth, profilesCtrl.getPlayerInfoByName)
+router.get('/getPlayerInfoById/:teamId/:playerId', checkAuth, profilesCtrl.getPlayerInfoById)
 router.get('/getUpcomingFixtures/:teamId', checkAuth, profilesCtrl.getUpcomingFixtureForFavoriteTeams)
 
 export { router }

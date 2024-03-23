@@ -163,12 +163,24 @@ async function getTeamInformation(req, res) {
   }
 }
 
-async function getPlayerInfo(req, res) {
+async function getPlayerInfoByName(req, res) {
   try {
     const playerName = req.body.playerName
     const teamId = req.params.teamId
     const year = req.params.year
-    const playerData = await soccerApiMiddleware.getPlayerInformation(teamId, year, playerName)
+    const playerData = await soccerApiMiddleware.getPlayerInformationByName(teamId, year, playerName)
+    res.status(200).json(playerData)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+async function getPlayerInfoById(req, res) {
+  try {
+    const playerId = req.params.playerId
+    const teamId = req.params.teamId
+    const year = req.params.year
+    const playerData = await soccerApiMiddleware.getPlayerInformationByName(teamId, year, playerId)
     res.status(200).json(playerData)
   } catch (error) {
     res.status(500).json(error)
@@ -184,4 +196,4 @@ try {
 }
 }
 
-export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests, addFavoriteTeamToProfile, addFavoritePlayerToProfile, getTeamInformation, getUpcomingFixtureForFavoriteTeams, getPlayerInfo }
+export { index, addPhoto, update, addLeaguesToInterests, show, updateInterests, addFavoriteTeamToProfile, addFavoritePlayerToProfile, getTeamInformation, getUpcomingFixtureForFavoriteTeams, getPlayerInfoByName, getPlayerInfoById }
