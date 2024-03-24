@@ -19,7 +19,7 @@ router.put('/:userId/favoriteTeam', checkAuth, profilesCtrl.addFavoriteTeamToPro
 router.put('/:userId/favoritePlayer', checkAuth, profilesCtrl.addFavoritePlayerToProfile)
 router.put('/getTeamInfo', checkAuth, profilesCtrl.getTeamInformation)
 router.put('/getPlayerInfoByName/:teamId/:year', checkAuth, profilesCtrl.getPlayerInfoByName)
-router.get('/getPlayerInfoById/:teamId/:playerId', checkAuth, profilesCtrl.getPlayerInfoById)
+router.get('/getPlayerInfoById/:teamId/:playerId/:year', checkAuth, profilesCtrl.getPlayerInfoById)
 router.get('/getUpcomingFixtures/:teamId', checkAuth, profilesCtrl.getUpcomingFixtureForFavoriteTeams)
 
 export { router }

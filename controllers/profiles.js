@@ -180,7 +180,7 @@ async function getPlayerInfoById(req, res) {
     const playerId = req.params.playerId
     const teamId = req.params.teamId
     const year = req.params.year
-    const playerData = await soccerApiMiddleware.getPlayerInformationByName(teamId, year, playerId)
+    const playerData = await soccerApiMiddleware.getPlayerInformationById(teamId, year, playerId)
     res.status(200).json(playerData)
   } catch (error) {
     res.status(500).json(error)
